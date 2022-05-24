@@ -1,0 +1,152 @@
+{
+    "categories":[
+        {   "id":1,
+            "libelle":"Petit déjeuner",
+            "image": "./images/categories/breakfast.png",
+            "parent":0,
+            "niveau":0
+        },
+        {   "id":2,
+            "libelle":"Cuisine",
+            "image": "./images/categories/cuisine.png",
+            "parent":0,
+            "niveau":0
+        },
+        {   "id":3,
+            "libelle":"Boissons",
+            "image": "./images/categories/j&b.png",
+            "parent":0,
+            "niveau":0
+        },
+        {   "id":4,
+            "libelle":"Salade",
+            "image": "./images/categories/salade.png",
+            "parent":0,
+            "niveau":0
+        },
+        {   "id":5,
+            "libelle":"Glace",
+            "image": "./images/categories/glace.png",
+            "parent":0,
+            "niveau":0
+        },
+        {   "id":6,
+            "libelle":"Patisserie",
+            "image": "./images/categories/patisserie.png",
+            "parent":0,
+            "niveau":0
+        },
+        {   "id":7,
+            "libelle":"Plats",
+            "image": "./images/categories/plats.png",
+            "parent":0,
+            "niveau":0
+        },
+        {   "id":8,
+            "libelle":"Spécial",
+            "image": "./images/categories/special.png",
+            "parent":0,
+            "niveau":0
+        },
+        {   "id":9,
+            "libelle":"Pizza",
+            "parent":2,
+            "niveau":1
+        },
+        {   "id":10,
+            "libelle":"Tacos",
+            "parent":2,
+            "niveau":1
+        },
+        {   "id":11,
+            "libelle":"Panini",
+            "parent":2,
+            "niveau":1
+        },
+        {   "id":12,
+            "libelle":"Burger",
+            "parent":2,
+            "niveau":1
+        },
+        {   "id":13,
+            "libelle":"Pates",
+            "parent":2,
+            "niveau":1
+        },
+        {   "id":14,
+            "libelle":"Chawarma",
+            "parent":2,
+            "niveau":1
+        },
+        {   "id":15,
+            "libelle":"Sandwich",
+            "parent":2,
+            "niveau":1
+        },
+        {   "id":16,
+            "libelle":"Café",
+            "parent":3,
+            "niveau":1
+        },
+        {   "id":17,
+            "libelle":"Thé",
+            "parent":3,
+            "niveau":1
+        },
+        {   "id":18,
+            "libelle":"Gazeuse",
+            "parent":3,
+            "niveau":1
+        },
+        {   "id":19,
+            "libelle":"Eau",
+            "parent":3,
+            "niveau":1
+        },
+        {   "id":20,
+            "libelle":"Jus",
+            "parent":3,
+            "niveau":1
+        },
+        {   "id":21,
+            "libelle":"Boissons chaudes",
+            "parent":16,
+            "niveau":2
+        },
+        {   "id":22,
+            "libelle":"Propositions",
+            "parent":16,
+            "niveau":2
+        },
+        {   "id":23,
+            "libelle":"Gourmandise",
+            "parent":16,
+            "niveau":2
+        },
+        {   "id":23,
+            "libelle":"Boissons Fraiches",
+            "parent":20,
+            "niveau":2
+        },
+        {   "id":24,
+            "libelle":"Cocktails",
+            "parent":20,
+            "niveau":2
+        },
+        {   "id":25,
+            "libelle":"Frappé/smoothie",
+            "parent":20,
+            "niveau":2
+        },
+        {   "id":25,
+            "libelle":"Pièce Montée",
+            "parent":6,
+            "niveau":1
+        },
+        {   "id":25,
+            "libelle":"Crèpes",
+            "parent":6,
+            "niveau":1
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .container-wrapper {
+    @apply max-w-7xl w-full mx-auto px-5;
+  }
+  /* header */
+  .nav {
+    @apply flex bg-white gap-1 top-[80px] left-0 right-0 md:absolute md:flex-col md:p-5 md:gap-2 md:shadow-md md:transform md:translate-x-full transition-all duration-300 md:border-t border-gray-300;
+  }
+  .nav_active {
+    @apply transform translate-x-0 transition-all duration-300;
+  }
+  .nav-link {
+    @apply text-secondary px-3 py-2 rounded-lg text-xl hover:bg-secondary hover:text-white  transition-all duration-300 md:w-full md:bg-[#eee];
+  }
+  .header-icon {
+    @apply cursor-pointer p-3 rounded-full bg-[#eee] text-primary hover:bg-secondary 
+    hover:text-white transition-all duration-300;
+  }
+
+  /* cart */
+  .counter-btn {
+    @apply bg-gray-300 p-2 rounded-md text-primary hover:bg-secondary hover:text-white transition-all shadow-md drop-shadow-md hover:scale-105;
+  }
+}
