@@ -45,7 +45,7 @@ export default function CartListItem({item}) {
         </div>
 
         <div className="text-secondary font-semibold text-xl drop-shadow-md">
-          ${productTotalPrice.toFixed(2)}
+          {productTotalPrice.toFixed(2)}DH
         </div>
       </div>
       

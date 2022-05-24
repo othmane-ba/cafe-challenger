@@ -25,7 +25,7 @@ export default function CartList({cart}) {
         </ul>
         <div className="lg:static fixed top-[18%] right-[15%] xl:right-5 bg-white ring-1 ring-gray-200 ring-opacity-20 rounded-lg  shadow-xl drop-shadow-sm lg:shadow max-w-[250px] xl:max-w-[200px] lg:max-w-full w-full h-[200px] flex flex-col justify-center items-center space-y-3">
           <h3 className="text-primary font-black text-2xl">Total: </h3>
-          <p className="text-secondary font-bold text-3xl">${totalPrice}</p>
+          <p className="text-secondary font-bold text-3xl">{totalPrice}DH</p>
           <MyButton text="Checkout"/>
         </div>
     </div>
