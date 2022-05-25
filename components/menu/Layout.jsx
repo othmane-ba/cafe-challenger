@@ -1,7 +1,7 @@
 import Head  from "next/head";
 import Footer from "./Footer";
 import Link from 'next/link'
-import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { useEffect, useState } from "react";
@@ -88,7 +88,7 @@ export default function Layout() {
             <div 
               className="header-icon hidden md:block"
               onClick={() => setMenuActive(!menuActive)}>
-              { menuActive ? <CloseIcon /> : <MenuIcon/> }
+              { menuActive ? <ArrowForwardRoundedIcon /> : <MenuIcon/> }
             </div>
             {/* <div className="header-icon">
               <SearchIcon />
@@ -99,7 +99,7 @@ export default function Layout() {
             <Link href="/" >
               <div className="relative">
                 <div className="header-icon">
-                  <ArrowBackRoundedIcon/>
+                  <CloseIcon/>
                 </div>
               </div>
             </Link>
@@ -127,8 +127,6 @@ export default function Layout() {
               <div className="col-span-11">
                   <div className="text-center flex flex-col h-full">
                     <div>
-                      <h2 className="text-secondary text-l font-semibold mt-5">Nos plats</h2>
-                      <h3 className="text-primary text-2xl font-semibold uppercase">{categorieTitle}</h3>
                     </div>
                     <div className="grid grid-cols-3 mx-8 lg:grid-cols-4 md:grid-cols-2 flex flex-wrap gap-5 place-items-center justify-center">
                       {!isEmpty(categories) && categories.filter(item=>item.niveau==2 && item.parent==parent2)?.map((categorie) => (
@@ -139,7 +137,7 @@ export default function Layout() {
                       </div>
                       ))}
                     </div>
-                    <div style={{maxHeight: '59vh'}} className="my-8 overflow-y-scroll flex-1">
+                    <div style={{maxHeight: '69vh'}} className="my-8 overflow-y-auto flex-1">
                       <Products items={menu} categorie={active}/>
                     </div>
                   </div>
@@ -148,11 +146,11 @@ export default function Layout() {
                 <div className="col-span-3">
                   <h3 className="text-primary text-2xl font-semibold uppercase">Cart</h3>
                 <div className="grid grid-rows-4 grid-flow-col gap-4">
-                  <div style={{maxHeight: '59vh'}} className="row-span-3 w-full overflow-y-scroll flex-1">
+                  <div style={{maxHeight: '59vh'}} className="row-span-3 w-full overflow-y-auto flex-1">
                     {cart.length < 1 && <div className="h-full flex justify-center items-center">
                       <h2 className="font-black text-4xl text-gray-300 drop-shadow-sm">Your cart is empty</h2>
                     </div>}
-                  <ul className="w-full ring-1 ring-gray-200 ring-opacity-20 rounded-lg max-w-3xl shadow-xl lg:shadow drop-shadow-sm overflow-hidden lg:order-2">
+                  <ul className="w-full ring-1 ring-gray-200 ring-opacity-20 rounded-lg max-w-3xl lg:shadow drop-shadow-sm overflow-hidden lg:order-2">
                     { 
                         cart?.map(item => (
                           <CartListItem key={item.id} item={item}/>
