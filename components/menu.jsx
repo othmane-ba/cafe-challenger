@@ -13,7 +13,6 @@ export default function ChallengerMenu() {
   const [active,setActive]=useState({parent:'',child:'',second:''})
   useEffect(()=>{
     setMenu(data)
-    console.log('hello')
   },[data])
   const [categorieTitle,setCategorieTitle]=useState('toutes les catégories')
   const changeCategorie=(title,id)=>{
