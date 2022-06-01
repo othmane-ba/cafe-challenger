@@ -17,20 +17,20 @@ export default function ChallengerMenu() {
   const [categorieTitle,setCategorieTitle]=useState('toutes les catégories')
   const changeCategorie=(title,id)=>{
     setCategorieTitle(title)
-    setMenu(data.filter(item=>item.categorie===id));
+    setMenu(data.filter(item=>item.category_id===id));
     setParent1(id)
     setActive({parent:id,child:'',second:''})
     setParent2("")
   }
   const changeChildCategorie=(title,id)=>{
     setCategorieTitle(title)
-    setMenu(data.filter(item=>item.categorie===id));
+    setMenu(data.filter(item=>item.category_id===id));
     setParent2(id)
     setActive({...active,child:id,second:''})
   }
   const FinalCategorie=(title,id)=>{
     setCategorieTitle(title)
-    setMenu(data.filter(item=>item.categorie===id));
+    setMenu(data.filter(item=>item.category_id===id));
     setActive({...active,second:id})
   }
 

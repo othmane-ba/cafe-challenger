@@ -5,7 +5,7 @@ export const GET_CATEGORIE = 'GET_CATEGORIE';
 export const getCategorie = () => {
   return (dispatch) => {
     return axios
-      .get(`https://cafe-challenger-backend.herokuapp.com/categorie`)
+      .get(`http://192.168.100.65:8080/category`)
       .then((res) => {
         dispatch({ type: GET_CATEGORIE, payload: res.data });
       })

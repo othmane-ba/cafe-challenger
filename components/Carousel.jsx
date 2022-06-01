@@ -9,14 +9,12 @@ import SwiperCore, { Pagination, Autoplay } from "swiper";
 SwiperCore.use([Pagination, Autoplay]);
 
 import { useSelector } from "react-redux";
-import MyButton from "./MyButton";
 import { isEmpty } from "../utils/Utils";
 import ChallengerMenu from "./menu";
 
 export default function Carousel() {
   const slides = useSelector((state) => state.slides);
   return (
-    <div>
       <div className="h-full flex items-center justify-center container-wrapper">
         <Swiper
           className="mySwiper"
@@ -45,7 +43,7 @@ export default function Carousel() {
                 <div className="h-full md:pb-10">
                   <img
                     className="md:max-h-[250px]"
-                    src={slide.img}
+                    src={slide.image}
                     alt="slide-img"
                   />
                 </div>
@@ -53,8 +51,7 @@ export default function Carousel() {
             </SwiperSlide>
           ))}
         </Swiper>
+        {/* <ChallengerMenu/> */}
       </div>
-      <ChallengerMenu/>
-    </div>
   );
 }

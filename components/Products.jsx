@@ -10,7 +10,6 @@ export default function Products({items}) {
             <ProductsItem
               key={item.id}
               item={item}
-              products={items} 
             />
           ))
         }

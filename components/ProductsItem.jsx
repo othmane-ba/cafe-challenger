@@ -1,13 +1,20 @@
 import ReactStars from "react-rating-stars-component";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../features/cartSlice";
+import {addCartItems, getCartItems} from "../actions/cartItems.action"
 
 
-export default function ProductsItem({item, products}) {
+export default function ProductsItem({item}) {
   const dispatch = useDispatch();
-
-  const addToCartHandler = (id, value, price) => {
-    dispatch(addToCart({id, value, products, price}))
+  const cart_id=localStorage.getItem('cart_id')
+  const addToCartHandler = () => {
+    const data={
+      product_id:item.id,
+      cart_id: cart_id,
+      quantity:1
+    }
+    dispatch(addCartItems(data)).then(()=>{
+      dispatch(getCartItems(cart_id))
+    })
   }
 
   return (
@@ -32,7 +39,7 @@ export default function ProductsItem({item, products}) {
       </div>
       <div className="flex items-center gap-2">
         <p className="text-xl text-secondary font-semibold">{item.price}DH</p>
-        <div onClick={() => addToCartHandler(item.id, 1, item.price)} >
+        <div onClick={() => addToCartHandler()} >
             <button 
       className="bg-primary hover:bg-secondary relative z-[999] text-white py-2 px-5 text-l rounded-md transition-all whitespace-nowrap max-w-[150px]">
       Add To Cart

@@ -2,18 +2,24 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch } from 'react-redux';
-import {adjustQuantity, removeFromCart } from '../features/cartSlice';
+import { deleteCartItems, editCartItems, getCartItems } from '../actions/cartItems.action';
 
 export default function CartListItem({item}) {
+  const cart_id=localStorage.getItem('cart_id')
   const dispatch = useDispatch();
 
-  const adjustQuantityHandler = (id, value, price) => {
-    dispatch(adjustQuantity({id, value, price}))
+  const adjustQuantityHandler = (value) => {
+    if(item.quantity==1 && value==-1){
+      dispatch(deleteCartItems(item.id))
+    }else{
+    const data={
+      id:item.id,cart_id:item.cart_id,product_id:item.product_id,title:item.title,image:item.image,price:item.price,quantity:item.quantity+value,total:item.price*(item.quantity+value)
+    }
+    dispatch(editCartItems(data)).then(()=>{
+      dispatch(getCartItems(cart_id))
+    })}
   }
 
-  const removeFromCartHandler = (id, value, price) => {
-    dispatch(removeFromCart({id, value, price}))
-  }
 
   let productTotalPrice = item.price * item.quantity;
 
@@ -22,7 +28,7 @@ export default function CartListItem({item}) {
       <div className="sm:self-end ring-1 ring-gray-300 ring-opacity-30 shadow-md drop-shadow-md rounded-full p-2 text-gray-400 hover:bg-gray-200 hover:text-red-500 hover:scale-105 transition-all">
         <CloseIcon 
           fontSize="medium" 
-          onClick={() => removeFromCartHandler(item.id, item.quantity, -productTotalPrice)} />
+          onClick={() => dispatch(deleteCartItems(item.id))} />
       </div>
       <div className="max-w-[200px] min-w-[100px] h-40 rounded-lg overflow-hidden ">
         <img className="object-contain h-full" src={item.image} alt="" />
@@ -32,13 +38,13 @@ export default function CartListItem({item}) {
 
         <div className="flex gap-3 items-center">
           <div 
-            onClick={() => adjustQuantityHandler(item.id, 1, item.price)}
+            onClick={() => adjustQuantityHandler(1)}
             className="counter-btn">
             <AddIcon />
           </div>
           <span className="text-2xl text-bold">{item.quantity}</span>
           <div 
-            onClick={() => adjustQuantityHandler(item.id, -1, -item.price)}
+            onClick={() => adjustQuantityHandler(-1)}
             className="counter-btn">
             <RemoveIcon />
           </div>

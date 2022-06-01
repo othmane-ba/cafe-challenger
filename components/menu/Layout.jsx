@@ -12,34 +12,37 @@ import CartListItem from "./CartListItem";
 
 export default function Layout() {
   const [menuActive, setMenuActive] = useState(false);
-  const totalPrice = useSelector(state => state.cart.totalPrice);
-  const cart = useSelector(state => state.cart.cart);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const cartitems = useSelector((state) => state.cartitems);
+  const cart = useSelector((state) => state.cart);
   const categories = useSelector((state) => state.categories);
   const data = useSelector((state) => state.menu);
   const [menu,setMenu]=useState()
   const [parent1,setParent1]=useState(0)
   const [parent2,setParent2]=useState(0)
   const [active,setActive]=useState({parent:'',child:'',second:''})
+  
   useEffect(()=>{
     setMenu(data)
-  },[data])
+      setTotalPrice(!isEmpty(cart[0]) && cart[0].total);
+  },[data,cart])
   const [categorieTitle,setCategorieTitle]=useState('toutes les catégories')
   const changeCategorie=(title,id)=>{
     setCategorieTitle(title)
-    setMenu(data.filter(item=>item.categorie===id));
+    setMenu(data.filter(item=>item.category_id===id));
     setParent1(id)
     setActive({parent:id,child:'',second:''})
     setParent2("")
   }
   const changeChildCategorie=(title,id)=>{
     setCategorieTitle(title)
-    setMenu(data.filter(item=>item.categorie===id));
+    setMenu(data.filter(item=>item.category_id===id));
     setParent2(id)
     setActive({...active,child:id,second:''})
   }
   const FinalCategorie=(title,id)=>{
     setCategorieTitle(title)
-    setMenu(data.filter(item=>item.categorie===id));
+    setMenu(data.filter(item=>item.category_id===id));
     setActive({...active,second:id})
   }
   return (
@@ -59,7 +62,7 @@ export default function Layout() {
     
           <nav className={menuActive ? "nav nav_active" :"nav"}>
           <div className="grid grid-cols-8 lg:grid-cols-8 md:grid-cols-2 flex flex-wrap place-items-center justify-center">
-                {!isEmpty(categories) && categories.filter(item=>item.niveau===0)?.map((categorie) => (
+                {!isEmpty(categories) && categories.filter(item=>item.level===0)?.map((categorie) => (
                   <div
                     key={categorie.id}
                     className={`cursor-pointer relative flex flex-col items-center ${active.parent==categorie.id? "bg-yellow-500" :"bg-white"} max-w-xs w-3/4 h-full rounded-md hover:bg-yellow-500 transition-all duration-300`}
@@ -115,7 +118,7 @@ export default function Layout() {
               <div className="col-span-9 grid grid-cols-12 w-full">
               <div className="ml-3">
               <div className="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-1 flex flex-wrap gap-2 place-items-center justify-center">
-                      {!isEmpty(categories) && categories.filter(item=>item.niveau>0 && item.parent==parent1)?.map((categorie) => (
+                      {!isEmpty(categories) && categories.filter(item=>item.level>0 && item.parent==parent1)?.map((categorie) => (
                         <div key={categorie.key} onClick={()=>changeChildCategorie(categorie.title,categorie.id)} className={`cursor-pointer relative flex flex-col gap-2 items-center py-6 ${active.child==categorie.id? "bg-yellow-500" :"bg-white"} max-w-xs w-full h-full rounded-md drop-shadow-md hover:scale-105 transition-all duration-300`}>
                         <div className="flex-1 flex flex-col items-center px-5">
                           <h3 className={`text-l font-semibold ${active.child==categorie.id? "text-white" :"text-primary"}`}>{categorie.title}</h3>
@@ -129,7 +132,7 @@ export default function Layout() {
                     <div>
                     </div>
                     <div className="grid grid-cols-3 mx-8 lg:grid-cols-4 md:grid-cols-2 flex flex-wrap gap-5 place-items-center justify-center">
-                      {!isEmpty(categories) && categories.filter(item=>item.niveau==2 && item.parent==parent2)?.map((categorie) => (
+                      {!isEmpty(categories) && categories.filter(item=>item.level==2 && item.parent==parent2)?.map((categorie) => (
                         <div key={categorie.key} onClick={()=>FinalCategorie(categorie.title,categorie.id)} className={`cursor-pointer relative flex flex-col gap-2 items-center py-6 ${active.second==categorie.id? "bg-yellow-500" :"bg-white"} max-w-xs w-full h-full rounded-md drop-shadow-md hover:scale-105 transition-all duration-300`}>
                         <div className="flex-1 flex flex-col items-center px-5">
                           <h3 className={`text-l font-semibold ${active.second==categorie.id? "text-white" :"text-primary"}`}>{categorie.title}</h3>
@@ -147,12 +150,12 @@ export default function Layout() {
                   <h3 className="text-primary text-2xl font-semibold uppercase">Cart</h3>
                 <div className="grid grid-rows-4 grid-flow-col gap-4">
                   <div style={{maxHeight: '59vh'}} className="row-span-3 w-full overflow-y-auto flex-1">
-                    {cart.length < 1 && <div className="h-full flex justify-center items-center">
+                    {isEmpty(cartitems) && <div className="h-full flex justify-center items-center">
                       <h2 className="font-black text-4xl text-gray-300 drop-shadow-sm">Your cart is empty</h2>
                     </div>}
                   <ul className="w-full ring-1 ring-gray-200 ring-opacity-20 rounded-lg max-w-3xl lg:shadow drop-shadow-sm overflow-hidden lg:order-2">
                     { 
-                        cart?.map(item => (
+                       !isEmpty(cartitems) && cartitems?.map(item => (
                           <CartListItem key={item.id} item={item}/>
                         ))   
                     }
@@ -160,7 +163,7 @@ export default function Layout() {
                     </div>
                     <div className="xl:right-5 bg-white ring-1 ring-gray-200 ring-opacity-20 rounded-lg flex flex-col justify-center items-center space-y-2 py-2 w-full">
                       <h3 className="text-primary font-black text-xl">Total: </h3>
-                      <p className="text-secondary font-bold text-2xl">{totalPrice}DH</p>
+                      <p className="text-secondary font-bold text-2xl">{totalPrice ? totalPrice : 0}DH</p>
                       <button 
                         className="bg-primary hover:bg-secondary relative z-[999] text-white py-1 px-3 text-base rounded-md transition-all whitespace-nowrap max-w-[150px]">
                         Checkout

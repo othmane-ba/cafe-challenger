@@ -19,9 +19,6 @@ SwiperCore.use([Pagination]);
 
 export default function ReviewCarousel() {
   const reviews = useSelector(state => state.reviews)
-  useEffect(()=>{
-    console.log(reviews)
-  })
   return (
     <div className="px-5 py-10">
       <Swiper 
@@ -55,7 +52,7 @@ export default function ReviewCarousel() {
 
                 <div className="flex gap-1">
                   <div className="w-16 h-16 rounded-full overflow-hidden">
-                    <img className="object-contain" src={review.img} alt="review-img" />
+                    <img className="object-contain" src={review.image} alt="review-img" />
                   </div>
                   <div className="flex-1 px-3">
                     <h3 className="text-left font-bold text-primary">{review.name}</h3>
