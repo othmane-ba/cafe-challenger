@@ -8,7 +8,7 @@
   }
   /* header */
   .nav {
-    @apply flex bg-white gap-1 top-[80px] left-0 right-0 md:absolute md:flex-col md:p-5 md:gap-2 md:shadow-md md:transform md:translate-x-full transition-all duration-300 md:border-t border-gray-300;
+    @apply flex bg-white gap-1 top-[80px] left-0 right-0 md:absolute md:flex-col md:p-5 md:gap-2 md:shadow-md md:transform md:translate-x-full transition-all duration-300 md:border-t border-gray-300 items-center;
   }
   .nav_active {
     @apply transform translate-x-0 transition-all duration-300;

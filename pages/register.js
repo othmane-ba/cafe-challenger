@@ -1,11 +1,18 @@
 import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addClient } from "../actions/client.action";
+import { isEmpty } from "../utils/Utils";
 
 export default function Register() {
   const router = useRouter()
+  useEffect(()=>{
+    const token=localStorage.getItem('new').split('||')
+  if(!isEmpty(token[1])){
+      router.push('/')
+  }
+  })
   const dispatch = useDispatch();
   const [values, setValues] = useState({
     nom: '',

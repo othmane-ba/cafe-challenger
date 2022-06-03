@@ -1,11 +1,18 @@
 import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getClient } from "../actions/client.action";
+import { isEmpty } from '../utils/Utils';
 
 export default function Login(){
   const router = useRouter()
+  useEffect(()=>{
+    const token=localStorage.getItem('new').split('||')
+  if(!isEmpty(token[1])){
+      router.push('/')
+  }
+  })
   const dispatch = useDispatch();
   const [values, setValues] = useState({
     email: '',
@@ -42,7 +49,7 @@ export default function Login(){
     let isValidForm = handleValidation();
     if (isValidForm) {
       const data={
-        email:values.email,password:values.password
+        email:values.email,password:values.password,old_session:localStorage.getItem('new')
       }
       dispatch(getClient(data)).then(()=>{
         router.push('/')
@@ -70,12 +77,12 @@ export default function Login(){
                 </div>
                 {/* Email input */}
                 <div className="mb-6">
-                  <input type="text" value={values.email} onChange={handleChange} onBlur={handleValidation} name='email' className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleFormControlInput1" placeholder="Email" />
+                  <input type="text" value={values.email} onChange={handleChange} name='email' className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleFormControlInput1" placeholder="Email" />
                 </div>
                 {errors?.email &&(<span className="text-xs text-red-400">L'email' ne peut pas être vide!</span>)}
                 {/* Password input */}
                 <div className="mb-6">
-                  <input type="password" value={values.password} onChange={handleChange} onBlur={handleValidation} name='password' className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleFormControlInput2" placeholder="Mot de pass" />
+                  <input type="password" value={values.password} onChange={handleChange} name='password' className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleFormControlInput2" placeholder="Mot de pass" />
                 </div>
                 {errors?.password &&(<span className="text-xs text-red-400">Le mot de pass ne peut pas être vide!</span>)}
                 <div className="flex justify-between items-center mb-6">
@@ -89,7 +96,7 @@ export default function Login(){
                   <button onClick={handleSubmit} type="button" className="bg-primary hover:bg-secondary relative z-[999] text-white inline-block px-7 py-3 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-secondary focus:shadow-lg focus:outline-none focus:ring-0 active:bg-secondary active:shadow-lg transition duration-150 ease-in-out">
                   Connexion
                   </button>
-                  {showFailureMessage &&(<span className="text-xs text-red-400">E-mail ou mot de passe incorrect, veuillez réessayer</span>)}
+                  <br/>{showFailureMessage &&(<span className="text-xs text-red-400">E-mail ou mot de passe incorrect, veuillez réessayer</span>)}
                   <p className="text-sm font-semibold mt-2 pt-1 mb-0">
                     Vous n'avez pas de compte ?
                     <Link href="/register" passHref>

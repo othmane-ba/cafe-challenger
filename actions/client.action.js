@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+export const FIND_CLIENT = 'FIND_CLIENT';
 export const GET_CLIENT = 'GET_CLIENT';
 export const ADD_CLIENT = 'ADD_CLIENT';
 export const EDIT_CLIENT = 'EDIT_CLIENT';
@@ -7,13 +8,25 @@ export const DELETE_CLIENT = 'DELETE_CLIENT';
 
 export const getClient = (data) => {
   return (dispatch) => {
-    return axios
-    .post(`http://192.168.100.65:8080/login/`,data)
+    return axios({
+      method: 'put',
+      url: `http://192.168.100.65:8080/login/`,
+      data: { ...data },
+    })
       .then((res) => {
-        console.log(res.data)
-        localStorage.setItem('new',`${localStorage.getItem('new')}-${res.data[0].id}`)
-        dispatch({ type: GET_CLIENT, payload: data });
+        localStorage.setItem('new',`${localStorage.getItem('new')}||${res.data[0].id}`)
+        dispatch({ type: GET_CLIENT, payload: {...data} });
       })
+  };
+};
+export const findClient = (id) => {
+  return (dispatch) => {
+    return axios
+      .get(`http://192.168.100.65:8080/client/id/${id}`)
+      .then((res) => {
+        dispatch({ type: FIND_CLIENT, payload: res.data });
+      })
+      .catch((err) => console.log(err));
   };
 };
 export const addClient = (data) => {

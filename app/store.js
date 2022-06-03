@@ -6,6 +6,7 @@ import menuReducer from"../reducers/menu.reducer";
 import reviewsReducer from"../reducers/reviews.reducer";
 import cartItemsReducer from"../reducers/cartItems.reducer";
 import clientReducer from"../reducers/client.reducer";
+import orderReducer from "../reducers/order.reducer";
 
 const rootReducer = combineReducers({
   slides: carouselReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   cartitems: cartItemsReducer,
   client: clientReducer,
+  order: orderReducer,
 })
 
 export const store = configureStore({

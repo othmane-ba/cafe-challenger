@@ -1,16 +1,15 @@
 import Link from 'next/link'
-import SearchIcon from '@mui/icons-material/Search';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { useEffect, useState } from 'react';
 import { isEmpty } from "../utils/Utils";
 import { useSelector } from 'react-redux';
+import Header_dropdown from './header_dropdown';
 export default function Header() {
   const [token,setToken]=useState('')
   useEffect(()=>{
-    setToken(localStorage.getItem('new').split("-"))
+    localStorage.getItem('new') && setToken(localStorage.getItem('new').split("||"))
   },[])
   const [menuActive, setMenuActive] = useState(false);
   const cart = useSelector((state) => state.cartitems);
@@ -41,10 +40,7 @@ export default function Header() {
           <Link href='/order'>
             <a className="nav-link">Commande</a>
           </Link>
-          {token && token[1] && (<Link href='/profile'>
-            <a className="nav-link">Profile</a>
-          </Link>)}
-          
+          {token && token[1] ?<Header_dropdown/>: 'hello'}
         </nav>
   
         <div className="flex gap-2">
@@ -53,12 +49,6 @@ export default function Header() {
             onClick={() => setMenuActive(!menuActive)}>
             { menuActive ? <CloseIcon /> : <MenuIcon/> }
           </div>
-          {/* <div className="header-icon">
-            <SearchIcon />
-          </div>
-          <div className="header-icon">
-            <FavoriteIcon />
-          </div> */}
           <Link href="/cart" >
             <div className="relative">
               <div className="header-icon">
