@@ -30,9 +30,7 @@ function MyApp({ Component, pageProps }) {
           setcart_id(localStorage.getItem('cart_id'))
         }else{
           var token={session_id:localStorage.getItem('new')};
-          console.log('token',token)
           axios.post('http://192.168.100.65:8080/cart/',token).then((res)=>{
-            console.log('result',res)
             axios.get(`http://192.168.100.65:8080/cart/session_id/${res.data.session_id}`).then((res)=>{
               localStorage.setItem('cart_id',res.data[0].id)
             })
@@ -47,7 +45,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     router.events.on("routeChangeStart", () => setLoading(true));
     router.events.on("routeChangeComplete", () => setLoading(false));
-    const token=localStorage.getItem('new').split('||')
+    const token=!isEmpty(localStorage.getItem('new')) && localStorage.getItem('new').split('||')
     if(!isEmpty(token[0])){
       getcart()
       if(!isEmpty(token[1])){
@@ -57,7 +55,6 @@ function MyApp({ Component, pageProps }) {
       console.log('token not found');
       axios.get('http://192.168.100.65:8080/session/new').then(res =>{
         localStorage.setItem('new',res.data)
-        console.log(res.data)
         getcart()
       }
       )

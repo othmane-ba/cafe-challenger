@@ -14,7 +14,6 @@ export default function cart() {
   useEffect(()=>{
       dispatch(getCart(!isEmpty(cart) && cart[0].id))
       setTotalPrice(!isEmpty(cart[0]) && cart[0].total);
-      console.log('hello')
   },[cartitems])
 
   return (

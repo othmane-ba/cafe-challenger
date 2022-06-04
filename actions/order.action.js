@@ -17,9 +17,10 @@ export const getOrder = () => {
   };
 };
 export const addOrder = (data) => {
+  var cart_id=localStorage.getItem('cart_id')
   return (dispatch) => {
     return axios
-      .post(`http://192.168.100.65:8080/order`, data)
+      .post(`http://192.168.100.65:8080/order/cartID/${cart_id}`, data)
       .then(() => {
         dispatch({ type: ADD_ORDER, payload: data });
       })

@@ -26,6 +26,7 @@ function Header_dropdown() {
   };
   const logout = () => {
     localStorage.setItem('new','')
+    localStorage.setItem('cart_id','')
     router.reload()
   };
   return (

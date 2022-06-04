@@ -12,8 +12,7 @@ export default function orderReducer(state = initialState, action) {
     case GET_ORDER:
       return action.payload;
     case ADD_ORDER:
-      console.log(state)
-      return [];
+      return [action.payload,state];
     case EDIT_ORDER:
       return state.map((item) => {
         if (item.id === action.payload.id) {

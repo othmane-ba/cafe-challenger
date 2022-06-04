@@ -3,19 +3,18 @@ import { IconButton, Input, InputAdornment } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editClient, findClient, getClient } from "../actions/client.action";
-import Errordialog from "../components/errordialog";
 import { isEmpty } from "../utils/Utils";
-export default function Profile_details() {
-  const client = useSelector((state) => state.client);
-  const[data,setData]=useState('')
+import Dialogue from "./dialogue";
+export default function Profile_details({info,client}) {
+  
+  const[data,setData]=useState(info)
   const [showPassword, setShowPassword] = useState(false);
   useEffect(()=>{
       if(!isEmpty(client)){
         const adresse=isEmpty(client[0].address)?'':client[0].address
         const telephone=isEmpty(client[0].phone_number)?'':client[0].phone_number
         setData({nom:client[0].last_name,prenom:client[0].first_name,email:client[0].email,password:client[0].password,adresse:adresse,telephone:telephone})
-        }
-        console.log(client)  },[client])
+        }  },[client])
   const dispatch = useDispatch();
   const [showFailureMessage, setShowFailureMessage] = useState(false);
   const [open, setOpen] = useState(false);
@@ -81,8 +80,8 @@ export default function Profile_details() {
       };
   return (
     <>
-    <div className="container-wrapper flex h-full items-center justify-center py-7">
-        <form onSubmit={handleSubmit} className="grid grid-cols-2 md:grid-cols-1 gap-5 border border-gray-300 shadow-lg p-6 rounded-md max-w-4xl w-full">
+    <div className="container-wrapper flex h-full items-center justify-center">
+        <form onSubmit={handleSubmit} className="grid grid-cols-2 md:grid-cols-1 sm:gap-1 gap-5  rounded-md w-full">
           <div className='grid grid-cols-1 gap-2'>
           <label className="flex flex-col text-left gap-1">
             <span>Nom</span>
@@ -119,7 +118,8 @@ export default function Profile_details() {
           
           </div>
           <div className='grid grid-cols-1 gap-2 flex-1'>
-          <label className="flex flex-col text-left gap-1">
+          <div className="h-full">
+          <label className="flex flex-col text-left gap-1 mb-2">
             <span>Prenom</span>
                 <input 
                   name='prenom'
@@ -130,28 +130,6 @@ export default function Profile_details() {
                   placeholder="Enterez votre Prenom"/>
           </label>
           {errors?.prenom &&(<span className="text-xs text-red-400">Le prenom ne peut pas être vide!</span>)}
-          <label className="flex flex-col text-left gap-1">
-            <span>Password</span>
-                  <Input
-                        name='password'
-                        placeholder="Enterez votre mot de pass"
-                        className="bg-gray-200 rounded-md py-1 px-3 outline-none focus:ring-1 focus:ring-secondary focus:ring-opacity-50" 
-                        type={showPassword ? "text" : "password"}
-                        onChange={handleChange}
-                        value={data.password}
-                        disableUnderline
-                        endAdornment={
-                        <InputAdornment position="end">
-                            <IconButton
-                            onClick={handleClickShowPassword}
-                            >
-                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                            </IconButton>
-                        </InputAdornment>
-                        }
-                    />
-          </label>
-          {errors?.password &&(<span className="text-xs text-red-400">Le mot de passe ne peut pas être vide!</span>)}
           <label className="flex flex-col text-left gap-1">
             <span>Téléphone</span>
                 <input 
@@ -164,11 +142,12 @@ export default function Profile_details() {
           </label>
           {errors?.telephone &&(<span className="text-xs text-red-400">Le numero ne peut pas être vide!</span>)}
           </div>
+          </div>
           <button className=" bg-primary hover:bg-secondary relative z-[999] text-white py-2 px-5 text-l rounded-md transition-all whitespace-nowrap max-w-[150px]">
             Enregistrer
           </button>
           {showFailureMessage &&(<span className="text-xs text-red-400">Oups!! une erreur est survenue veuillez réessayer plus tard</span>)}
-          <Errordialog onClick={handleClose} open={open} header={text.header} text={text.text} />
+          <Dialogue onClick={handleClose} open={open} header={text.header} text={text.text} />
         </form>
       </div>
     </>

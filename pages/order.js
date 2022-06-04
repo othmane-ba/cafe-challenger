@@ -2,15 +2,19 @@ import { useRouter } from 'next/dist/client/router';
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { addOrder } from '../actions/order.action';
-import Errordialog from '../components/errordialog';
+import Dialogue from '../components/dialogue';
 import Layout from '../components/Layout'
-import MyButton from '../components/MyButton'
-import FormItem from '../utils/FormItem'
 import { isEmpty } from '../utils/Utils';
 
 
 export default function order() {
   const router = useRouter()
+  useEffect(()=>{
+    const token=localStorage.getItem('new').split('||')
+  if(isEmpty(token[1])){
+      router.push('/login')
+  }
+  })
   const dispatch = useDispatch();
   const cartitems = useSelector((state) => state.cartitems);
   const [showFailureMessage, setShowFailureMessage] = useState(false);
@@ -66,14 +70,12 @@ export default function order() {
         const values={
           client_id:client_id[1],address:data.adresse,phone_number:data.telephone,delivery_date:data.date,message:data.message
         }
-        dispatch(addOrder(values)).then((res)=>{
-          console.log('azazaz',res)
+        dispatch(addOrder(values)).then(()=>{
           setData({telephone:'',adresse:'',date:disablePastDate(),message:''})
           setText({header:'Done!!',text:'Commande envoyée avec succès'})
           setOpen(true)
           // router.push('/login')
         }).catch((err) => {console.log(err);setShowFailureMessage(true)});
-        console.log('done',values)
       }
     };
   return (
@@ -127,7 +129,7 @@ export default function order() {
             Commandez
           </button>
           {showFailureMessage &&(<span className="text-xs text-red-400">Oups!! une erreur est survenue veuillez réessayer plus tard</span>)}
-          <Errordialog onClick={handleClose} open={open} header={text.header} text={text.text} />
+          <Dialogue onClick={handleClose} open={open} header={text.header} text={text.text} />
           </div>
           <div className='grid grid-cols-1 gap-2 my-2 flex-1'>
             <div>

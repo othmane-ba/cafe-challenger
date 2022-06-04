@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import LoginIcon from '@mui/icons-material/Login';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -6,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { isEmpty } from "../utils/Utils";
 import { useSelector } from 'react-redux';
 import Header_dropdown from './header_dropdown';
+import { Button } from '@mui/material';
 export default function Header() {
   const [token,setToken]=useState('')
   useEffect(()=>{
@@ -37,10 +40,12 @@ export default function Header() {
           <Link href='/review'>
             <a className="nav-link">Commentaires</a>
           </Link>
-          <Link href='/order'>
-            <a className="nav-link">Commande</a>
-          </Link>
-          {token && token[1] ?<Header_dropdown/>: 'hello'}
+          {token && token[1] ?<Header_dropdown/>: <div className='gap-1 flex'>
+            <Link href='/login' passHref><a>
+          <Button variant="outlined" style={{color:'#84cc16',border: '1px solid #84cc16'}} startIcon={<LoginIcon />}>Login</Button></a></Link>
+          <Link href='/register' passHref><a>
+          <Button variant="outlined" style={{color:'#84cc16',border: '1px solid #84cc16'}} startIcon={<PersonAddAltIcon />}>Sign up</Button></a></Link></div>
+          }
         </nav>
   
         <div className="flex gap-2">
