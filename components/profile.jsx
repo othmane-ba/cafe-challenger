@@ -1,24 +1,12 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { IconButton, Input, InputAdornment } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { editClient, findClient, getClient } from "../actions/client.action";
-import { isEmpty } from "../utils/Utils";
-import Dialogue from "./dialogue";
-export default function Profile_details({info,client}) {
+import { useState } from "react";
+import PasswordDialogue from "./passwordDialogue";
+export default function Profile_details({info}) {
   
   const[data,setData]=useState(info)
   const [showPassword, setShowPassword] = useState(false);
-  useEffect(()=>{
-      if(!isEmpty(client)){
-        const adresse=isEmpty(client[0].address)?'':client[0].address
-        const telephone=isEmpty(client[0].phone_number)?'':client[0].phone_number
-        setData({nom:client[0].last_name,prenom:client[0].first_name,email:client[0].email,password:client[0].password,adresse:adresse,telephone:telephone})
-        }  },[client])
-  const dispatch = useDispatch();
   const [showFailureMessage, setShowFailureMessage] = useState(false);
   const [open, setOpen] = useState(false);
-  const [text, setText] = useState({header:'',text:''});
+  const [values, setValues] = useState();
   const handleClose = () => {
     setOpen(false);
   };
@@ -63,16 +51,10 @@ export default function Profile_details({info,client}) {
       if (isValidForm) {
         var client_id=localStorage.getItem('new').split('||')
         const {nom,prenom,email,password,adresse,telephone}=data;
-        const values={
+        setValues({
           id:client_id[1],first_name:prenom,last_name:nom,email:email,password:password,address:adresse,phone_number:telephone
-        }
-        dispatch(editClient(values)).then((res)=>{
-          setData({nom:client[0].last_name,prenom:client[0].first_name,email:client[0].email,password:client[0].password,adresse:adresse,telephone:telephone})
-          setText({header:'Done!!',text:'Compte modifié avec succès'})
-          setOpen(true)
-          dispatch(findClient(client_id[1]))
-          // router.push('/login')
-        }).catch((err) => {console.log(err);setShowFailureMessage(true)});
+        })
+        setOpen(true)
       }
     };
     const handleClickShowPassword = () => {
@@ -147,7 +129,7 @@ export default function Profile_details({info,client}) {
             Enregistrer
           </button>
           {showFailureMessage &&(<span className="text-xs text-red-400">Oups!! une erreur est survenue veuillez réessayer plus tard</span>)}
-          <Dialogue onClick={handleClose} open={open} header={text.header} text={text.text} />
+          <PasswordDialogue onClick={handleClose} open={open} data={values} />
         </form>
       </div>
     </>

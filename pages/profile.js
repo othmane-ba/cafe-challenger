@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Profile_details from "../components/profile";
 import { isEmpty } from "../utils/Utils";
-
+import Edit_Password from "../components/password";
 export default function profile2() {
     const client = useSelector((state) => state.client);
     const [info,setInfo]=useState('')
@@ -28,19 +28,19 @@ export default function profile2() {
             <div className="grid grid-cols-1 gap-7 border border-gray-300 shadow-lg p-6 rounded-md max-w-full w-full">
                 <div className='grid grid-cols-6 md:grid-cols-1 gap-2 py-5'>
                     <div>
-                        <h1 className="text-primary text-xl font-semibold uppercase">Profile Details</h1>
+                        <h1 className="text-primary text-xl font-semibold uppercase">Détails du profil</h1>
                     </div>
                     <div className="col-span-5">
-                    {!isEmpty(client) && !isEmpty(info) && <Profile_details info={info} client={client}/>}
+                    {!isEmpty(client) && !isEmpty(info) && <Profile_details info={info}/>}
                     </div>
                 </div>
                 <Divider variant="middle" />
                 <div className='grid grid-cols-6 md:grid-cols-1 gap-2 py-5'>
                     <div>
-                        <h1 className="text-primary text-xl font-semibold uppercase">Edit Password</h1>
+                        <h1 className="text-primary text-xl font-semibold uppercase">Modifier le mot de passe</h1>
                     </div>
                     <div className="col-span-5">
-                        inputs
+                    {!isEmpty(info) && <Edit_Password info={info}/>}
                     </div>
                 </div>
             </div>

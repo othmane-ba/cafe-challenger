@@ -1,11 +1,41 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useRef} from 'react'
+import { Fragment, useRef, useState} from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import Dialogue from './dialogue';
+import { useDispatch } from 'react-redux';
+import { editClient, findClient } from '../actions/client.action';
+import ErrorDialogue from './errordialogue';
 
-export default function Dialogue({open,onClick,header,text}) {
+export default function PasswordDialogue({open,onClick,data}) {
+  const dispatch = useDispatch();
+  const [open2, setOpen2] = useState(false);
+  const [openError, setOpenError] = useState(false);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(false);
   const cancelButtonRef = useRef(null)
-
+  const [text, setText] = useState({header:'',text:''});
+  const handleClose = () => {
+    setOpen2(false);
+  };
+  const handleErrorClose = () => {
+    setOpenError(false);
+  };
+  const handleSubmit=()=>{
+    if(password==data.password){
+      dispatch(editClient(data)).then(()=>{
+        setText({header:'Done!!',text:'Compte modifié avec succès'})
+        var client_id=localStorage.getItem('new').split('||')
+        dispatch(findClient(client_id[1]))
+        setOpen2(true)
+        setPassword('')
+        setError(false)
+        onClick()
+      }).catch((err) => {console.log(err);setText({header:'Error!!',text:"Une erreur c'est produite"});setOpenError(true)});
+    }else{
+      setError(true)
+    }
+  }
   return (
       <>
     <Transition.Root show={open} as={Fragment}>
@@ -41,12 +71,20 @@ export default function Dialogue({open,onClick,header,text}) {
                     </div>
                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                       <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                      {header}
+                      Veuillez entrer votr mot de pass !! 
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          {text}
-                        </p>
+                      <label className="flex flex-col text-left gap-1">
+                        <span>Mot de pass</span>
+                            <input  
+                              name='Password'
+                              className="bg-gray-200 rounded-md py-2 px-3 outline-none focus:ring-1 focus:ring-secondary focus:ring-opacity-50" 
+                              type="text"
+                              value={password}
+                              onChange={(e)=>setPassword(e.target.value)}
+                              placeholder="Entez votre Mot de pass"/>
+                      </label>
+                      {error==true &&(<span className="text-xs text-red-400">Mot de passe erroné</span>)}
                       </div>
                     </div>
                   </div>
@@ -55,7 +93,15 @@ export default function Dialogue({open,onClick,header,text}) {
                   <button
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    onClick={handleSubmit}
+                  >
+                    Accepter
+                  </button>
+                  <button
+                    type="button"
+                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={onClick}
+                    ref={cancelButtonRef}
                   >
                     Fermer
                   </button>
@@ -65,6 +111,9 @@ export default function Dialogue({open,onClick,header,text}) {
           </div>
         </div>
       </Dialog>
-    </Transition.Root></>
+    </Transition.Root>
+    <Dialogue onClick={handleClose} open={open2} header={text.header} text={text.text} />
+    <ErrorDialogue onClick={handleErrorClose} open={openError} header={text.header} text={text.text} />
+    </>
   )
 }

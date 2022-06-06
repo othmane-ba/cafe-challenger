@@ -4,6 +4,7 @@ import {
   EDIT_CLIENT,
   DELETE_CLIENT,
   FIND_CLIENT,
+  EDIT_PASSWORD,
 } from '../actions/client.action';
 
 const initialState = {};
@@ -13,6 +14,8 @@ export default function cartItemsReducer(state = initialState, action) {
     case GET_CLIENT:
       return action.payload;
     case FIND_CLIENT:
+      return action.payload;
+    case EDIT_PASSWORD:
       return action.payload;
     case ADD_CLIENT:
       return [action.payload, ...state];

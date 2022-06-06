@@ -5,6 +5,7 @@ export const GET_CLIENT = 'GET_CLIENT';
 export const ADD_CLIENT = 'ADD_CLIENT';
 export const EDIT_CLIENT = 'EDIT_CLIENT';
 export const DELETE_CLIENT = 'DELETE_CLIENT';
+export const EDIT_PASSWORD = 'EDIT_PASSWORD';
 
 export const getClient = (data) => {
   return (dispatch) => {
@@ -47,6 +48,16 @@ export const editClient = (data) => {
     })
       .then(() => {
         dispatch({ type: EDIT_CLIENT, payload: { ...data } });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+export const editPassword = (data) => {
+  return (dispatch) => {
+    return axios
+      .put(`http://192.168.100.65:8080/client/${data.id}/password/${data.password}`)
+      .then((res) => {
+        dispatch({ type: EDIT_PASSWORD, payload: res.data });
       })
       .catch((err) => console.log(err));
   };
