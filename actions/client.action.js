@@ -11,7 +11,7 @@ export const getClient = (data) => {
   return (dispatch) => {
     return axios({
       method: 'put',
-      url: `http://192.168.100.65:8080/login/`,
+      url: `https://cafe-challenger-backend.herokuapp.com/login/`,
       data: { ...data },
     })
       .then((res) => {
@@ -23,7 +23,7 @@ export const getClient = (data) => {
 export const findClient = (id) => {
   return (dispatch) => {
     return axios
-      .get(`http://192.168.100.65:8080/client/id/${id}`)
+      .get(`https://cafe-challenger-backend.herokuapp.com/client/id/${id}`)
       .then((res) => {
         dispatch({ type: FIND_CLIENT, payload: res.data });
       })
@@ -33,7 +33,7 @@ export const findClient = (id) => {
 export const addClient = (data) => {
   return (dispatch) => {
     return axios
-      .post(`http://192.168.100.65:8080/client`, data)
+      .post(`https://cafe-challenger-backend.herokuapp.com/client`, data)
       .then(() => {
         dispatch({ type: ADD_CLIENT, payload: data });
       })
@@ -43,7 +43,7 @@ export const editClient = (data) => {
   return (dispatch) => {
     return axios({
       method: 'put',
-      url: `http://192.168.100.65:8080/client/${data.id}`,
+      url: `https://cafe-challenger-backend.herokuapp.com/client/${data.id}`,
       data: { ...data },
     })
       .then(() => {
@@ -55,7 +55,7 @@ export const editClient = (data) => {
 export const editPassword = (data) => {
   return (dispatch) => {
     return axios
-      .put(`http://192.168.100.65:8080/client/${data.id}/password/${data.password}`)
+      .put(`https://cafe-challenger-backend.herokuapp.com/client/${data.id}/password/${data.password}`)
       .then((res) => {
         dispatch({ type: EDIT_PASSWORD, payload: res.data });
       })
@@ -66,7 +66,7 @@ export const deleteClient = (productid) => {
   return (dispatch) => {
     return axios({
       method: 'delete',
-      url: `http://192.168.100.65:8080/client/${productid}`,
+      url: `https://cafe-challenger-backend.herokuapp.com/client/${productid}`,
     })
       .then(() => {
         dispatch({ type: DELETE_CLIENT, payload: { productid } });
