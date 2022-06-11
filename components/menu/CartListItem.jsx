@@ -20,7 +20,7 @@ export default function CartListItem({item}) {
     })}
   }
   return (
-    <li className="flex sm:flex-col items-center p-5 border-b border-gray-300 border-opacity-30 gap-3">
+    <li className="flex sm:flex-col items-center p-2 border-b border-gray-300 border-opacity-30 gap-3">
       <div className="sm:self-end ring-1 ring-gray-300 ring-opacity-30 shadow-md drop-shadow-md rounded-full p-1 text-gray-400 hover:bg-gray-200 hover:text-red-500 hover:scale-105 transition-all">
         <CloseIcon 
           fontSize="medium" 

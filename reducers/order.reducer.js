@@ -1,5 +1,6 @@
 import {
   GET_ORDER,
+  GET_ORDER_DETAILS,
   ADD_ORDER,
   EDIT_ORDER,
   DELETE_ORDER,
@@ -10,6 +11,8 @@ const initialState = {};
 export default function orderReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ORDER:
+      return action.payload;
+    case GET_ORDER_DETAILS:
       return action.payload;
     case ADD_ORDER:
       return [action.payload,state];

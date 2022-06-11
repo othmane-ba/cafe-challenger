@@ -10,6 +10,7 @@ import { getCartItems } from '../actions/cartItems.action';
 import { getCategorie } from '../actions/categorie.action';
 import { findClient, getClient } from '../actions/client.action';
 import { getMenu } from '../actions/menu.action';
+import { getOrder } from '../actions/order.action';
 import { getReview } from '../actions/reviews.action';
 import { store } from '../app/store';
 import Loading from '../components/Loading';
@@ -19,7 +20,6 @@ import { isEmpty } from '../utils/Utils';
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [cart_id, setcart_id] = useState();
   const getcart = async () => {
     axios.get(`http://192.168.100.65:8080/cart/session_id/${localStorage.getItem('new')}`).then(res =>{
         if(!res.data.length==0){
@@ -27,7 +27,6 @@ function MyApp({ Component, pageProps }) {
           store.dispatch(getCart(localStorage.getItem('cart_id'))).then(()=>{
             store.dispatch(getCartItems(localStorage.getItem('cart_id')))
           })
-          setcart_id(localStorage.getItem('cart_id'))
         }else{
           var token={session_id:localStorage.getItem('new')};
           axios.post('http://192.168.100.65:8080/cart/',token).then((res)=>{
@@ -37,7 +36,6 @@ function MyApp({ Component, pageProps }) {
             store.dispatch(getCart(localStorage.getItem('cart_id'))).then(()=>{
               store.dispatch(getCartItems(localStorage.getItem('cart_id')))
             })
-            setcart_id(localStorage.getItem('cart_id'))
           })
         }
       })
@@ -50,6 +48,7 @@ function MyApp({ Component, pageProps }) {
       getcart()
       if(!isEmpty(token[1])){
         store.dispatch(findClient(token[1]));
+        store.dispatch(getOrder());
       }
     }else{
       console.log('token not found');
