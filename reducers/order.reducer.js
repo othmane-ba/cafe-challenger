@@ -12,8 +12,6 @@ export default function orderReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ORDER:
       return action.payload;
-    case GET_ORDER_DETAILS:
-      return action.payload;
     case ADD_ORDER:
       return [action.payload,state];
     case EDIT_ORDER:

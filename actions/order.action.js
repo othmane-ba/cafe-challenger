@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export const GET_ORDER = 'GET_ORDER';
-export const GET_ORDER_DETAILS = 'GET_ORDER_DETAILS';
 export const ADD_ORDER = 'ADD_ORDER';
 export const EDIT_ORDER = 'EDIT_ORDER';
 export const DELETE_ORDER = 'DELETE_ORDER';
@@ -13,16 +12,6 @@ export const getOrder = () => {
       .get(`https://cafe-challenger-backend.herokuapp.com/order/clientID/${client_id[1]}`)
       .then((res) => {
         dispatch({ type: GET_ORDER, payload: res.data });
-      })
-      .catch((err) => console.log(err));
-  };
-};
-export const getOrderDetails = (id) => {
-  return (dispatch) => {
-    return axios
-      .get(`https://cafe-challenger-backend.herokuapp.com/order-details/orderID/${id}`)
-      .then((res) => {
-        dispatch({ type: GET_ORDER_DETAILS, payload: res.data });
       })
       .catch((err) => console.log(err));
   };

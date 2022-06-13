@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import EmailIcon from '@mui/icons-material/Email';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useTheme } from '@mui/material/styles';
+import { useEffect,useState } from "react";
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -21,8 +22,9 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { isEmpty } from '../utils/Utils';
 import { Collapse, TableHead, Typography } from '@mui/material';
-import { getOrderDetails } from '../actions/order.action';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import Dialogue from './order-details/dialogue';
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -94,9 +96,12 @@ export default function ClientOrdersTable({orders}) {
           </div>
         )
       }
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [open, setOpen] = React.useState({state:false,id:''});
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [open, setOpen] = useState({state:false,id:''});
+  const [details, setDetails] = useState();
+  const [openmodal, setOpenmodal] = useState(false);
+  const [text, setText] = useState({header:'',text:''});
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -112,10 +117,17 @@ export default function ClientOrdersTable({orders}) {
   };
   const handleOpen = (id) => {
     setOpen({state:!open.state,id:id});
-    dispatch(getOrderDetails(id))
+    open.state==false && (axios.get(`https://cafe-challenger-backend.herokuapp.com/order-details/orderID/${id}`)
+    .then((res) => {
+      setDetails(res.data);
+    })
+    .catch((err) => console.log(err)))
   };
-
+  const handleClose = () => {
+    setOpenmodal(false);
+  };
   return (
+    <>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
         <TableHead>
@@ -176,12 +188,12 @@ export default function ClientOrdersTable({orders}) {
               </TableCell>
               <TableCell style={{ width: 8 }} align="center">
                 <IconButton aria-label="adresse" size="small" style={{color:'#ffa726'}}>
-                  <LocationOnIcon fontSize="small" />
+                  <LocationOnIcon fontSize="small" onClick={()=>(setText({header:'Location',text:row.address}),setOpen(true))} />
                 </IconButton>
               </TableCell>
               <TableCell style={{ width: 8 }} align="center">
                 <IconButton aria-label="message" size="small" color='success'>
-                  <EmailIcon fontSize="small" />
+                  <EmailIcon fontSize="small" onClick={()=>(setText({header:'Message',text:row.message}),setOpen(true))} />
                 </IconButton>
               </TableCell>
               <TableCell>
@@ -199,28 +211,24 @@ export default function ClientOrdersTable({orders}) {
               <Collapse in={open.state && open.id==row.id} timeout="auto" unmountOnExit>
                 <Box sx={{ margin: 1 }}>
                   <Typography variant="h6" gutterBottom component="div">
-                    Order Details
+                    Détails de la commande
                   </Typography>
-                  <Table size="small" aria-label="purchases">
+                  <Table size='small' aria-label="purchases">
                     <TableHead>
                       <TableRow>
-                        <TableCell>Date</TableCell>
-                        <TableCell>Customer</TableCell>
-                        <TableCell align="right">Amount</TableCell>
-                        <TableCell align="right">Total price ($)</TableCell>
+                        <TableCell>Produit</TableCell>
+                        <TableCell align="right">Prix (DH)</TableCell>
+                        <TableCell align="right">Quantité</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                        <TableRow>
-                          <TableCell component="th" scope="row">
-                            historyRow.date
-                          </TableCell>
-                          <TableCell>historyRow.customerId</TableCell>
-                          <TableCell align="right">historyRow.amount</TableCell>
-                          <TableCell align="right">
-                            price
-                          </TableCell>
+                      {!isEmpty(details) && details.map((row)=>(
+                        <TableRow key={row.id}>
+                        <TableCell>{row.title}</TableCell>
+                        <TableCell align="right">{row.price}</TableCell>
+                        <TableCell align="right">{row.quantity}</TableCell>
                         </TableRow>
+                      ))}
                     </TableBody>
                   </Table>
                 </Box>
@@ -257,5 +265,7 @@ export default function ClientOrdersTable({orders}) {
         </TableFooter>
       </Table>
     </TableContainer>
+    <Dialogue onClick={handleClose} open={openmodal}  header={text.header} text={text.text} />
+    </>
   );
 }
