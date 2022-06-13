@@ -88,7 +88,6 @@ TablePaginationActions.propTypes = {
 };
 
 export default function ClientOrdersTable({orders}) {
-  const dispatch = useDispatch();
     if(isEmpty(orders)) {
         return (
           <div className="h-full flex justify-center items-center">
@@ -188,12 +187,12 @@ export default function ClientOrdersTable({orders}) {
               </TableCell>
               <TableCell style={{ width: 8 }} align="center">
                 <IconButton aria-label="adresse" size="small" style={{color:'#ffa726'}}>
-                  <LocationOnIcon fontSize="small" onClick={()=>(setText({header:'Location',text:row.address}),setOpen(true))} />
+                  <LocationOnIcon fontSize="small" onClick={()=>(setText({header:'Location',text:row.address}),setOpenmodal(true))} />
                 </IconButton>
               </TableCell>
               <TableCell style={{ width: 8 }} align="center">
                 <IconButton aria-label="message" size="small" color='success'>
-                  <EmailIcon fontSize="small" onClick={()=>(setText({header:'Message',text:row.message}),setOpen(true))} />
+                  <EmailIcon fontSize="small" onClick={()=>(setText({header:'Message',text:row.message}),setOpenmodal(true))} />
                 </IconButton>
               </TableCell>
               <TableCell>
