@@ -186,13 +186,13 @@ export default function ClientOrdersTable({orders}) {
                 {row.delivered==0 ? <p style={{color:'red'}}>No</p> : <p style={{color:'green'}}>No</p>}
               </TableCell>
               <TableCell style={{ width: 8 }} align="center">
-                <IconButton aria-label="adresse" size="small" style={{color:'#ffa726'}}>
-                  <LocationOnIcon fontSize="small" onClick={()=>(setText({header:'Location',text:row.address}),setOpenmodal(true))} />
+                <IconButton aria-label="adresse" size="small" style={{color:'#ffa726'}} onClick={()=>(setText({header:'Location',text:row.address}),setOpenmodal(true))} >
+                  <LocationOnIcon fontSize="small"/>
                 </IconButton>
               </TableCell>
               <TableCell style={{ width: 8 }} align="center">
-                <IconButton aria-label="message" size="small" color='success'>
-                  <EmailIcon fontSize="small" onClick={()=>(setText({header:'Message',text:row.message}),setOpenmodal(true))} />
+                <IconButton aria-label="message" size="small" color='success' onClick={()=>(setText({header:'Message',text:row.message}),setOpenmodal(true))} >
+                  <EmailIcon fontSize="small"/>
                 </IconButton>
               </TableCell>
               <TableCell>
