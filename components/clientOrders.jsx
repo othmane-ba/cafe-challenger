@@ -110,37 +110,41 @@ export default function ClientOrdersTable({orders}) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const handleOpen = (id) => {
+    setOpen({state:!open.state,id:id});
+    dispatch(getOrderDetails(id))
+  };
 
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
         <TableHead>
           <TableRow className='bg-primary'>
-            <TableCell style={{ width: 8 }} className='text-white'>
+            <TableCell style={{ width: 8,color:'white' }}>
               CommandeID
             </TableCell>
-            <TableCell style={{ width: 160 }} align="right" className='text-white'>
+            <TableCell style={{ width: 160,color:'white' }} align="right">
               Total
             </TableCell>
-            <TableCell style={{ width: 160 }} align="center" className='text-white'>
+            <TableCell style={{ width: 160,color:'white' }} align="center">
               Quantité
             </TableCell>
-            <TableCell style={{ minWidth: 140 }} align="center" className='text-white'>
+            <TableCell style={{ minWidth: 140,color:'white' }} align="center">
               Date de livraison
             </TableCell>
-            <TableCell style={{ width: 160 }} align="center" className='text-white'>
+            <TableCell style={{ width: 160,color:'white' }} align="center">
               Téléphone
             </TableCell>
-            <TableCell style={{ width: 20 }} align="center" className='text-white'>
+            <TableCell style={{ width: 20,color:'white' }} align="center">
               Livré
             </TableCell>
-            <TableCell style={{ width: 8 }} align="center" className='text-white'>
+            <TableCell style={{ width: 8,color:'white' }} align="center">
               Adresse
             </TableCell>
-            <TableCell style={{ width: 8 }} align="center" className='text-white'>
+            <TableCell style={{ width: 8,color:'white' }} align="center">
               Message
             </TableCell>
-            <TableCell style={{ width: 2 }} align="center" className='text-white'>
+            <TableCell style={{ width: 2,color:'white' }} align="center">
               Delails
             </TableCell>
           </TableRow>
@@ -184,7 +188,7 @@ export default function ClientOrdersTable({orders}) {
                 <IconButton
                   aria-label="expand row"
                   size="small"
-                  onClick={() => {setOpen({state:!open.state,id:row.id});dispatch(getOrderDetails(row.id))}}
+                  onClick={()=>handleOpen(row.id)}
                 >
                   {open.state && open.id==row.id ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                 </IconButton>
