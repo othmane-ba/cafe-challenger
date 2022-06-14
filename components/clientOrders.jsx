@@ -116,7 +116,7 @@ export default function ClientOrdersTable({orders}) {
   };
   const handleOpen = (id) => {
     setOpen({state:!open.state,id:id});
-    open.state==false && (axios.get(`https://cafe-challenger-backend.herokuapp.com/order-details/orderID/${id}`)
+    open.state==false && (axios.get(`http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/order-details/orderID/${id}`)
     .then((res) => {
       setDetails(res.data);
     })

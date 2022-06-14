@@ -11,7 +11,7 @@ export const getClient = (data) => {
   return (dispatch) => {
     return axios({
       method: 'put',
-      url: `https://cafe-challenger-backend.herokuapp.com/login/`,
+      url: `http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/login/`,
       data: { ...data },
     })
       .then((res) => {
@@ -23,7 +23,7 @@ export const getClient = (data) => {
 export const findClient = (id) => {
   return (dispatch) => {
     return axios
-      .get(`https://cafe-challenger-backend.herokuapp.com/client/id/${id}`)
+      .get(`http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/client/id/${id}`)
       .then((res) => {
         dispatch({ type: FIND_CLIENT, payload: res.data });
       })
@@ -33,7 +33,7 @@ export const findClient = (id) => {
 export const addClient = (data) => {
   return (dispatch) => {
     return axios
-      .post(`https://cafe-challenger-backend.herokuapp.com/client`, data)
+      .post(`http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/client`, data)
       .then(() => {
         dispatch({ type: ADD_CLIENT, payload: data });
       })
@@ -43,7 +43,7 @@ export const editClient = (data) => {
   return (dispatch) => {
     return axios({
       method: 'put',
-      url: `https://cafe-challenger-backend.herokuapp.com/client/${data.id}`,
+      url: `http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/client/${data.id}`,
       data: { ...data },
     })
       .then(() => {
@@ -55,7 +55,7 @@ export const editClient = (data) => {
 export const editPassword = (data) => {
   return (dispatch) => {
     return axios
-      .put(`https://cafe-challenger-backend.herokuapp.com/client/${data.id}/password/${data.password}`)
+      .put(`http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/client/${data.id}/password/${data.password}`)
       .then((res) => {
         dispatch({ type: EDIT_PASSWORD, payload: res.data });
       })
@@ -66,7 +66,7 @@ export const deleteClient = (productid) => {
   return (dispatch) => {
     return axios({
       method: 'delete',
-      url: `https://cafe-challenger-backend.herokuapp.com/client/${productid}`,
+      url: `http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/client/${productid}`,
     })
       .then(() => {
         dispatch({ type: DELETE_CLIENT, payload: { productid } });
