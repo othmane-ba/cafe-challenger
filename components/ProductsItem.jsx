@@ -1,5 +1,6 @@
 import ReactStars from "react-rating-stars-component";
 import { useDispatch } from "react-redux";
+import { getCart } from "../actions/cart.action";
 import {addCartItems, getCartItems} from "../actions/cartItems.action"
 
 

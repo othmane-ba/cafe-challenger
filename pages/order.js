@@ -1,6 +1,6 @@
-import { useRouter } from 'next/dist/client/router';
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { deleteCart } from '../actions/cart.action';
 import { addOrder } from '../actions/order.action';
 import Dialogue from '../components/dialogue';
 import Layout from '../components/Layout'
@@ -8,7 +8,6 @@ import { isEmpty } from '../utils/Utils';
 
 
 export default function order() {
-  const router = useRouter()
   useEffect(()=>{
     const token=localStorage.getItem('new').split('||')
   if(isEmpty(token[1])){
@@ -74,7 +73,9 @@ export default function order() {
           setData({telephone:'',adresse:'',date:disablePastDate(),message:''})
           setText({header:'Done!!',text:'Commande envoyée avec succès'})
           setOpen(true)
-          // router.push('/login')
+          dispatch(deleteCart(localStorage.getItem('cart_id'))).then(()=>{
+            localStorage.setItem('cart_id','')}
+          )
         }).catch((err) => {console.log(err);setShowFailureMessage(true)});
       }
     };
