@@ -9,7 +9,7 @@ export const getOrder = () => {
   var client_id=localStorage.getItem('new').split('||')
   return (dispatch) => {
     return axios
-      .get(`http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/order/clientID/${client_id[1]}`)
+      .get(`https://cafe-challenger-backend.herokuapp.com/order/clientID/${client_id[1]}`)
       .then((res) => {
         dispatch({ type: GET_ORDER, payload: res.data });
       })
@@ -20,7 +20,7 @@ export const addOrder = (data) => {
   var cart_id=localStorage.getItem('cart_id')
   return (dispatch) => {
     return axios
-      .post(`http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/order/cartID/${cart_id}`, data)
+      .post(`https://cafe-challenger-backend.herokuapp.com/order/cartID/${cart_id}`, data)
       .then(() => {
         dispatch({ type: ADD_ORDER, payload: data });
       })
@@ -30,7 +30,7 @@ export const editOrder = (data) => {
   return (dispatch) => {
     return axios({
       method: 'put',
-      url: `http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/order/${data.id}`,
+      url: `https://cafe-challenger-backend.herokuapp.com/order/${data.id}`,
       data: { ...data },
     })
       .then(() => {
@@ -43,7 +43,7 @@ export const deleteOrder = (id) => {
   return (dispatch) => {
     return axios({
       method: 'delete',
-      url: `http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/order/${id}`,
+      url: `https://cafe-challenger-backend.herokuapp.com/order/${id}`,
     })
       .then(() => {
         dispatch({ type: DELETE_ORDER, payload: { id } });

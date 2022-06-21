@@ -8,7 +8,7 @@ export const DELETE_CARTITEMS = 'DELETE_CARTITEMS';
 export const getCartItems = (id) => {
   return (dispatch) => {
     return axios
-      .get(`http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/cart-items/cartID/${id}`)
+      .get(`https://cafe-challenger-backend.herokuapp.com/cart-items/cartID/${id}`)
       .then((res) => {
         dispatch({ type: GET_CARTITEMS, payload: res.data });
       })
@@ -18,7 +18,7 @@ export const getCartItems = (id) => {
 export const addCartItems = (data) => {
   return (dispatch) => {
     return axios
-      .post(`http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/cart-items`, data)
+      .post(`https://cafe-challenger-backend.herokuapp.com/cart-items`, data)
       .then(() => {
         dispatch({ type: ADD_CARTITEMS, payload: data });
       })
@@ -29,7 +29,7 @@ export const editCartItems = (data) => {
   return (dispatch) => {
     return axios({
       method: 'put',
-      url: `http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/cart-items/${data.id}`,
+      url: `https://cafe-challenger-backend.herokuapp.com/cart-items/${data.id}`,
       data: { ...data },
     })
       .then(() => {
@@ -42,7 +42,7 @@ export const deleteCartItems = (productid) => {
   return (dispatch) => {
     return axios({
       method: 'delete',
-      url: `http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/cart-items/${productid}`,
+      url: `https://cafe-challenger-backend.herokuapp.com/cart-items/${productid}`,
     })
       .then(() => {
         dispatch({ type: DELETE_CARTITEMS, payload: { productid } });

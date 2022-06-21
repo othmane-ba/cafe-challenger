@@ -17,8 +17,8 @@ export default function CartList({cart,totalPrice}) {
     <div className="container-wrapper flex gap-5 py-8 relative lg:flex-col">
         <ul className="w-full ring-1 ring-gray-200 ring-opacity-20 rounded-lg max-w-3xl shadow-xl lg:shadow drop-shadow-sm overflow-hidden lg:order-2">
           { 
-              !isEmpty(cart) && cart.map(item => (
-                <CartListItem key={item.id} item={item}/>
+              !isEmpty(cart) && cart.map((item,id) => (
+                <CartListItem key={id} item={item}/>
               ))   
           }
         </ul>

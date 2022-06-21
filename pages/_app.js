@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const getcart = async () => {
-    axios.get(`http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/cart/session_id/${localStorage.getItem('new')}`).then(res =>{
+    axios.get(`https://cafe-challenger-backend.herokuapp.com/cart/session_id/${localStorage.getItem('new')}`).then(res =>{
         if(!res.data.length==0){
           localStorage.setItem('cart_id',res.data[0].id)
           store.dispatch(getCart(localStorage.getItem('cart_id'))).then(()=>{
@@ -29,8 +29,8 @@ function MyApp({ Component, pageProps }) {
           })
         }else{
           var token={session_id:localStorage.getItem('new')};
-          axios.post('http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/cart/',token).then((res)=>{
-            axios.get(`http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/cart/session_id/${res.data.session_id}`).then((res)=>{
+          axios.post('https://cafe-challenger-backend.herokuapp.com/cart/',token).then((res)=>{
+            axios.get(`https://cafe-challenger-backend.herokuapp.com/cart/session_id/${res.data.session_id}`).then((res)=>{
               localStorage.setItem('cart_id',res.data[0].id)
             })
             store.dispatch(getCart(localStorage.getItem('cart_id'))).then(()=>{
@@ -52,7 +52,7 @@ function MyApp({ Component, pageProps }) {
       }
     }else{
       console.log('token not found');
-      axios.get('http://ec2-3-83-98-74.compute-1.amazonaws.com:8080/session/new').then(res =>{
+      axios.get('https://cafe-challenger-backend.herokuapp.com/session/new').then(res =>{
         localStorage.setItem('new',res.data)
         getcart()
       }
