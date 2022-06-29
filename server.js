@@ -8,7 +8,7 @@ app.prepare().then(()=>{
     server.get('*',(req,res)=>{
         return handle(req,res)
     })
-    server.listen(3030,(err)=>{
+    server.listen(3000,(err)=>{
         if(err) throw errconsole.log('server ready!*')
     })
 }).catch((ex)=>{

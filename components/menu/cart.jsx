@@ -6,7 +6,7 @@ import CartListItem from "./CartListItem";
 export default function Cart({cartitems,cart}) {
     const [totalPrice, setTotalPrice] = useState(0);
     useEffect(()=>{
-          setTotalPrice(!isEmpty(cart[0]) && cart[0].total);
+      setTotalPrice(!isEmpty(cart[0]) && Number(cart[0].total));
       },[cart])
   return (
     <><h3 className="text-primary text-2xl font-semibold uppercase">Cart</h3>
@@ -17,8 +17,8 @@ export default function Cart({cartitems,cart}) {
       </div>}
     <ul className="w-full ring-1 ring-gray-200 ring-opacity-20 rounded-lg max-w-3xl lg:shadow drop-shadow-sm overflow-hidden lg:order-2">
       { 
-         !isEmpty(cartitems) && cartitems?.map(item => (
-            <CartListItem key={item.id} item={item}/>
+         !isEmpty(cartitems) && cartitems?.map((item,id) => (
+            <CartListItem key={id} item={item}/>
           ))   
       }
     </ul>

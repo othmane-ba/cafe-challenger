@@ -6,7 +6,7 @@ export const DELETE_CART = 'DELETE_CART';
 export const getCart = (id) => {
   return (dispatch) => {
     return axios
-      .get(`https://cafe-challenger-backend.herokuapp.com/cart/id/${id}`)
+      .get(`http://localhost:8080/cart/id/${id}`)
       .then((res) => {
         dispatch({ type: GET_CART, payload: res.data });
       })
@@ -17,7 +17,7 @@ export const deleteCart = (id) => {
   return (dispatch) => {
     return axios({
       method: 'delete',
-      url: `https://cafe-challenger-backend.herokuapp.com/cart/${id}`,
+      url: `http://localhost:8080/cart/${id}`,
     })
       .then(() => {
         dispatch({ type: DELETE_CART, payload: { id } });

@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Cart from "./cart";
 import CartDrawer from "./cartDrawer";
-import CategoriesComponent from "./categories";
 
 export default function Layout() {
   const cartitems = useSelector((state) => state.cartitems);
@@ -28,7 +27,6 @@ export default function Layout() {
     setMenu(data)
   },[data])
   const changeCategorie=(id)=>{
-    console.log(id)
     setMenu(data.filter(item=>item.category_id===id));
     setParent1(id)
     setActive({parent:id,child:'',second:''})

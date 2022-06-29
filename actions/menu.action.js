@@ -5,7 +5,7 @@ export const GET_MENU = 'GET_MENU';
 export const getMenu = () => {
   return (dispatch) => {
     return axios
-      .get(`https://cafe-challenger-backend.herokuapp.com/product`)
+      .get(`http://localhost:8080/product`)
       .then((res) => {
         dispatch({ type: GET_MENU, payload: res.data });
       })

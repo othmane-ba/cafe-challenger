@@ -1,10 +1,14 @@
 import Link from "next/link";
+import { useEffect } from "react";
 import { isEmpty } from "../utils/Utils";
 import CartListItem from "./CartListItem";
 import MyButton from "./MyButton";
 
 
 export default function CartList({cart,totalPrice}) {
+  useEffect(()=>{
+    console.log('hello')
+  },totalPrice)
   if(isEmpty(cart)) {
     return (
       <div className="h-full flex justify-center items-center">
