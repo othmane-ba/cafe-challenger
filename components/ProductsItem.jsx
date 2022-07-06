@@ -1,10 +1,12 @@
+import { ConnectWithoutContactOutlined } from "@mui/icons-material";
 import ReactStars from "react-rating-stars-component";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../actions/cart.action";
 import {addCartItems, getCartItems} from "../actions/cartItems.action"
 
 
 export default function ProductsItem({item}) {
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const cart_id=localStorage.getItem('cart_id')
   const addToCartHandler = () => {
@@ -14,6 +16,8 @@ export default function ProductsItem({item}) {
       quantity:1
     }
     dispatch(addCartItems(data)).then(()=>{
+      if(cart[0].total==null)
+      window.location.reload()
       dispatch(getCartItems(cart_id))
     })
   }

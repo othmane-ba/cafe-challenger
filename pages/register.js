@@ -68,8 +68,8 @@ export default function Register() {
         first_name:values.prenom,last_name:values.nom,email:values.email,password:values.password
       }
       dispatch(addClient(data)).then((res)=>{
-        setValues({nom:'',prenom:'',email:'',password:'',confirm:''})
         router.push('/login')
+        // setValues({nom:'',prenom:'',email:'',password:'',confirm:''})
       })
       .catch((err) => {console.log(err);setShowFailureMessage(true)});
     }

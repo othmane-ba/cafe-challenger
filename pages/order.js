@@ -1,3 +1,4 @@
+import { useRouter } from 'next/dist/client/router';
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCart } from '../actions/cart.action';
@@ -8,6 +9,7 @@ import { isEmpty } from '../utils/Utils';
 
 
 export default function order() {
+  const router=useRouter()
   useEffect(()=>{
     const token=localStorage.getItem('new').split('||')
   if(isEmpty(token[1])){

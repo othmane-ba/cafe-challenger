@@ -5,12 +5,13 @@ import "swiper/css";
 import "swiper/css/pagination";
 // import Swiper core and required modules
 import SwiperCore, { Pagination, Autoplay } from "swiper";
+import Link from "next/link";
 // install Swiper modules
 SwiperCore.use([Pagination, Autoplay]);
 
 import { useSelector } from "react-redux";
 import { isEmpty } from "../utils/Utils";
-import ChallengerMenu from "./menu";
+import MyButton from "./MyButton";
 
 export default function Carousel() {
   const slides = useSelector((state) => state.slides);
@@ -38,7 +39,11 @@ export default function Carousel() {
                   <p className="text-2xl md:text-lg text-gray-500">
                   {slide.description}
                   </p>
-                  {/* <MyButton text="Order Now" /> */}
+                  <Link href='/menu'>
+                  <button 
+                    className="bg-primary hover:bg-secondary relative z-[999] text-white py-2 px-5 text-l rounded-md transition-all whitespace-nowrap max-w-[150px]">
+                    Commander
+                  </button></Link>
                 </div>
                 <div className="h-full md:pb-10">
                   <img

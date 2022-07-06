@@ -16,6 +16,7 @@ export default function profile2() {
         router.push('/login')
     }
     if(!isEmpty(client)){
+      console.log(client)
       const adresse=isEmpty(client[0].address)?'':client[0].address
       const telephone=isEmpty(client[0].phone_number)?'':client[0].phone_number
       setInfo({nom:client[0].last_name,prenom:client[0].first_name,email:client[0].email,password:client[0].password,adresse:adresse,telephone:telephone})

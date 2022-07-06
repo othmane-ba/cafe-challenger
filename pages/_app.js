@@ -20,6 +20,7 @@ import { isEmpty } from '../utils/Utils';
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [data, setData] = useState('');
   const getcart = async () => {
     axios.get(`http://localhost:8080/cart/session_id/${localStorage.getItem('new')}`).then(res =>{
         if(!res.data.length==0){
@@ -46,23 +47,35 @@ function MyApp({ Component, pageProps }) {
     const token=!isEmpty(localStorage.getItem('new')) && localStorage.getItem('new').split('||')
     if(!isEmpty(token[0])){
       getcart()
+      let data={}
       if(!isEmpty(token[1])){
+        axios.get(`http://localhost:8080/get-data?token=${token[0]}`).then(res =>{
+        setData(res.data);
+      }
+      )
         store.dispatch(findClient(token[1]));
         store.dispatch(getOrder());
+      }else{
+        axios.get(`http://localhost:8080/get-data?token=${token[0]}`).then(res =>{
+          setData(res.data);
+      }
+      )
       }
     }else{
-      console.log('token not found');
-      axios.get('http://localhost:8080/session/new').then(res =>{
-        localStorage.setItem('new',res.data)
+      axios.get('http://localhost:8080/get-data').then(res =>{
+        localStorage.setItem('new',res.data.token)
         getcart()
+        setData(res.data);
       }
       )
     }
   }, []);
-  store.dispatch(getCategorie());
-  store.dispatch(getCarousel());
-  store.dispatch(getMenu());
-  store.dispatch(getReview());
+  !isEmpty(data) && (
+      store.dispatch(getCarousel(data.carousel)),
+      store.dispatch(getCategorie(data.categories)),
+      store.dispatch(getMenu(data.products)),
+      store.dispatch(getReview(data.reviews))
+      )
 
   return (
     <Provider store={store}>
