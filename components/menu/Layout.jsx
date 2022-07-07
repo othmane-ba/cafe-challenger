@@ -11,7 +11,6 @@ import Cart from "./cart";
 import CartDrawer from "./cartDrawer";
 
 export default function Layout() {
-  const cartitems = useSelector((state) => state.cartitems);
   const cart = useSelector((state) => state.cart);
   const categories = useSelector((state) => state.categories);
   const data = useSelector((state) => state.menu);
@@ -40,7 +39,8 @@ export default function Layout() {
   const FinalCategorie=(id)=>{
     setMenu(data.filter(item=>item.category_id===id));
     setActive({...active,second:id})
-  }
+  };
+  console.log(cart)
   return (
     <div className="relative max-w-screen h-screen w-full flex flex-col">
       <Head>
@@ -89,9 +89,9 @@ export default function Layout() {
                 <ShoppingCartIcon/>
               </div>
               {
-                !isEmpty(cartitems) && (
+                !isEmpty(cart) && (
                   <div className="absolute -top-2 -right-2 text-center w-6 h-6 rounded-full bg-red-400 flex item-center justify-center hidden md:block">
-                    <span className="text-white">{cartitems.length}</span>
+                    <span className="text-white">{cart.length}</span>
                   </div>
                 )
               }
@@ -106,7 +106,7 @@ export default function Layout() {
           </div>
 
         </div>
-        <CartDrawer open={open} onClick={handleClose} cartitems={cartitems} cart={cart}/>
+        <CartDrawer open={open} onClick={handleClose} cartitems={cart}/>
       </header>
 
       <main className="mt-[80px] md:relative z-40 flex-1">
@@ -165,7 +165,7 @@ export default function Layout() {
                   </div>
                 </div>
                 <div className="sm:hidden col-span-3">
-                  <Cart cartitems={cartitems} cart={cart}/>
+                  <Cart cartitems={cart}/>
                 </div>
             </div>
           </div>

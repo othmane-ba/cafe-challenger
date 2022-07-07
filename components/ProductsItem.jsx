@@ -1,25 +1,17 @@
-import { ConnectWithoutContactOutlined } from "@mui/icons-material";
 import ReactStars from "react-rating-stars-component";
-import { useDispatch, useSelector } from "react-redux";
-import { getCart } from "../actions/cart.action";
-import {addCartItems, getCartItems} from "../actions/cartItems.action"
+import {MajCartItems} from "../actions/cartItems.action"
 
 
 export default function ProductsItem({item}) {
-  const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
-  const cart_id=localStorage.getItem('cart_id')
-  const addToCartHandler = () => {
+  const token=localStorage.getItem('token')
+  const addToCartHandler = async() => {
     const data={
       product_id:item.id,
-      cart_id: cart_id,
+      token: token,
+      price:item.price,
       quantity:1
     }
-    dispatch(addCartItems(data)).then(()=>{
-      if(cart[0].total==null)
-      window.location.reload()
-      dispatch(getCartItems(cart_id))
-    })
+    await MajCartItems('add',data)
   }
 
   return (

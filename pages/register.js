@@ -2,13 +2,13 @@ import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addClient } from "../actions/client.action";
+import { addClient, MajClient } from "../actions/client.action";
 import { isEmpty } from "../utils/Utils";
 
 export default function Register() {
   const router = useRouter()
   useEffect(()=>{
-    const token=localStorage.getItem('new').split('||')
+    const token=localStorage.getItem('token').split('x336m')
   if(!isEmpty(token[1])){
       router.push('/')
   }
@@ -60,17 +60,15 @@ export default function Register() {
       return {...prev,[name]:value};
     })
   }
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     let isValidForm = handleValidation();
     if (isValidForm) {
       const data={
         first_name:values.prenom,last_name:values.nom,email:values.email,password:values.password
       }
-      dispatch(addClient(data)).then((res)=>{
-        router.push('/login')
-        // setValues({nom:'',prenom:'',email:'',password:'',confirm:''})
-      })
+      await MajClient('add',data)
+      router.push('/login')
       .catch((err) => {console.log(err);setShowFailureMessage(true)});
     }
   };

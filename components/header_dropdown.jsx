@@ -14,6 +14,7 @@ import Logout from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import { useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
+import { doLogout } from '../actions/client.action';
 function Header_dropdown() {
   const router=useRouter()
   const [anchorEl, setAnchorEl] = useState(null);
@@ -24,10 +25,9 @@ function Header_dropdown() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const logout = () => {
-    localStorage.setItem('new','')
-    localStorage.setItem('cart_id','')
-    router.reload()
+  const logout = async() => {
+    await doLogout();
+    router.push('/')
   };
   return (
     <>

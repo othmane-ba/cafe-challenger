@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import PasswordDialogue from "./passwordDialogue";
 export default function Profile_details({info}) {
-  
+  const client = useSelector((state) => state.client);
   const[data,setData]=useState(info)
   const [showPassword, setShowPassword] = useState(false);
   const [showFailureMessage, setShowFailureMessage] = useState(false);
@@ -49,10 +50,9 @@ export default function Profile_details({info}) {
       e.preventDefault();
       let isValidForm = handleValidation();
       if (isValidForm) {
-        var client_id=localStorage.getItem('new').split('||')
         const {nom,prenom,email,password,adresse,telephone}=data;
         setValues({
-          id:client_id[1],first_name:prenom,last_name:nom,email:email,password:password,address:adresse,phone_number:telephone
+          id:client.id,first_name:prenom,last_name:nom,email:email,password:password,address:adresse,phone_number:telephone
         })
         setOpen(true)
       }

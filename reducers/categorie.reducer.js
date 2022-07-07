@@ -1,6 +1,4 @@
-import {
-  GET_CATEGORIE,
-} from '../actions/categorie.action';
+import { GET_CATEGORIE } from "../actions/categorie.action";
 
 const initialState = {};
 

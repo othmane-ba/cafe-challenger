@@ -31,7 +31,7 @@ export default function CartList({cart,totalPrice}) {
           <p className="text-secondary font-bold text-3xl">{totalPrice ? totalPrice : 0}DH</p>
           <Link href='/order' passHref>
             <a>
-          <MyButton text="Checkout"/></a></Link>
+          <MyButton text="Commander"/></a></Link>
         </div>
     </div>
   )

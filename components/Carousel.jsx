@@ -33,7 +33,7 @@ export default function Carousel() {
                   {/* <span className="text-3xl md:text-xl text-secondary">
                     Our Specil Dish
                   </span> */}
-                  <h2 className="text-5xl md:text-3xl font-black text-primary">
+                  <h2 className="text-5xl md:text-3xl font-black text-primary uppercase">
                     {slide.title}
                   </h2>
                   <p className="text-2xl md:text-lg text-gray-500">

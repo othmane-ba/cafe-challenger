@@ -1,76 +1,20 @@
-import axios from 'axios';
-
-export const FIND_CLIENT = 'FIND_CLIENT';
-export const GET_CLIENT = 'GET_CLIENT';
-export const ADD_CLIENT = 'ADD_CLIENT';
-export const EDIT_CLIENT = 'EDIT_CLIENT';
-export const DELETE_CLIENT = 'DELETE_CLIENT';
-export const EDIT_PASSWORD = 'EDIT_PASSWORD';
-
+import { store } from "../app/store";
+import { Api_get, Api_post } from "../pages/api_calls";
+export const GET_CLIENT = "GET_CLIENT";
 export const getClient = (data) => {
   return (dispatch) => {
-    return axios({
-      method: 'put',
-      url: `http://localhost:8080/login/`,
-      data: { ...data },
-    })
-      .then((res) => {
-        localStorage.setItem('new',`${localStorage.getItem('new')}||${res.data[0].id}`)
-        dispatch({ type: GET_CLIENT, payload: {...data} });
-      })
+    return dispatch({ type: GET_CLIENT, payload: data });
   };
 };
-export const findClient = (id) => {
-  return (dispatch) => {
-    return axios
-      .get(`http://localhost:8080/client/id/${id}`)
-      .then((res) => {
-        dispatch({ type: FIND_CLIENT, payload: res.data });
-      })
-      .catch((err) => console.log(err));
-  };
+export const MajClient = async (action, data) => {
+  await Api_post("maj-client", data, { action });
 };
-export const addClient = (data) => {
-  return (dispatch) => {
-    return axios
-      .post(`http://localhost:8080/client`, data)
-      .then(() => {
-        dispatch({ type: ADD_CLIENT, payload: data });
-      })
-  };
+export const doLogin = async (action, data) => {
+  const result = await Api_post("do-login", data, { action });
+  console.log(result);
+  localStorage.setItem("token", result.token);
+  store.dispatch(getClient(result.output.client));
 };
-export const editClient = (data) => {
-  return (dispatch) => {
-    return axios({
-      method: 'put',
-      url: `http://localhost:8080/client/${data.id}`,
-      data: { ...data },
-    })
-      .then(() => {
-        dispatch({ type: EDIT_CLIENT, payload: { ...data } });
-      })
-      .catch((err) => console.log(err));
-  };
-};
-export const editPassword = (data) => {
-  return (dispatch) => {
-    return axios
-      .put(`http://localhost:8080/client/${data.id}/password/${data.password}`)
-      .then((res) => {
-        dispatch({ type: EDIT_PASSWORD, payload: res.data });
-      })
-      .catch((err) => console.log(err));
-  };
-};
-export const deleteClient = (productid) => {
-  return (dispatch) => {
-    return axios({
-      method: 'delete',
-      url: `http://localhost:8080/client/${productid}`,
-    })
-      .then(() => {
-        dispatch({ type: DELETE_CLIENT, payload: { productid } });
-      })
-      .catch((err) => console.log(err));
-  };
+export const doLogout = async () => {
+  await Api_get("do-log-out");
 };

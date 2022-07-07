@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { editPassword, findClient } from "../actions/client.action";
+import { useDispatch, useSelector } from "react-redux";
+import { editPassword, findClient, MajClient } from "../actions/client.action";
 import Dialogue from "./dialogue";
 import ErrorDialogue from "./errordialogue";
 export default function Edit_Password({info}) {
   const dispatch = useDispatch();
-  var client_id=localStorage.getItem('new').split('||')
+  const client = useSelector((state) => state.client);
   const[data,setData]=useState({password:'',new_password:''})
   const [text, setText] = useState({header:'',text:''});
   const [open, setOpen] = useState(false);
-  const [values, setValues] = useState({id:parseInt(client_id[1]),password:data.new_password});
+  const [values, setValues] = useState({id:client.id,password:data.new_password});
   const [openError, setOpenError] = useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -40,19 +40,17 @@ export default function Edit_Password({info}) {
         return {...prev,[name]:value};
       })
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
       e.preventDefault();
       const {password,new_password}=data;
-      setValues({id:parseInt(client_id[1]),password:new_password})
+      setValues({...client,password:new_password})
       let isValidForm = handleValidation();
       if (isValidForm) {
         if(password==info.password){
-          dispatch(editPassword(values)).then(()=>{
+          await MajClient("edit", values);
             setText({header:'Done!!',text:'Compte modifié avec succès'})
             setOpen(true)
             setData({password:'',new_password:''})
-            dispatch(findClient(client_id[1]))
-          }).catch((err) => {console.log(err);setText({header:'Error!!',text:"Une erreur c'est produite"});setOpenError(true)});
         }else{
           setText({header:'Error!!',text:"Mot de passe erroné"});setOpenError(true)
         }
@@ -87,7 +85,7 @@ export default function Edit_Password({info}) {
                   className="bg-gray-200 rounded-md py-2 px-3 outline-none focus:ring-1 focus:ring-secondary focus:ring-opacity-50" 
                   type="password"
                   value={data.new_password}
-                  onChange={(e)=>(handleChange(e),setValues({id:parseInt(client_id[1]),password:e.target.value}))}
+                  onChange={(e)=>(handleChange(e),setValues({id:client.id,password:e.target.value}))}
                   placeholder="Enterez votre nouveau mot de passe"/>
           </label>
           {errors?.new_password &&(<span className="text-xs text-red-400">Le mot de passe ne peut pas être vide!</span>)}

@@ -12,7 +12,7 @@ import { Button } from '@mui/material';
 export default function Header() {
   const [token,setToken]=useState('')
   useEffect(()=>{
-    localStorage.getItem('new') && setToken(localStorage.getItem('new').split("||"))
+    localStorage.getItem('token') && setToken(localStorage.getItem('token').split("x336m"))
   },[])
   const [menuActive, setMenuActive] = useState(false);
   const cart = useSelector((state) => state.cartitems);

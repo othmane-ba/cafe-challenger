@@ -8,7 +8,7 @@ export default function ClientOrders() {
   const orders = useSelector((state) => state.order);
   const router = useRouter()
   useEffect(()=>{
-    const token=localStorage.getItem('new').split('||')
+    const token=localStorage.getItem('token').split('x336m')
   if(isEmpty(token[1])){
       router.push('/')
   }
